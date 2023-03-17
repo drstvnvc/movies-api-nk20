@@ -17,4 +17,19 @@ class Movie extends Model
         'release_date',
         'genre',
     ];
+
+    public static function scopeSearchByTitle($query, $title)
+    {
+        return $query->where('title', 'like', "%$title%");
+    }
+
+    public static function scopeSearchByDirector($query, $director)
+    {
+        return $query->where('director', 'like', "%$director%");
+    }
+
+    public static function scopeSearchByGenre($query, $genre)
+    {
+        return $query->where('genre', 'like', "%$genre%");
+    }
 }

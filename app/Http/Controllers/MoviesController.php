@@ -12,9 +12,28 @@ class MoviesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $movies = Movie::all();
+        $title = $request->query('title', '');
+        $director = $request->query('director', '');
+        $genre = $request->query('genre', '');
+
+        $movies = [];
+
+        $movies_query = Movie::query(); // Movie::all();
+
+        if ($title) {
+            $movies_query->searchByTitle($title);
+        }
+        if ($director) {
+            $movies_query->searchByDirector($director);
+        }
+        if ($genre) {
+            $movies_query->searchByGenre($genre);
+        }
+
+        $movies = $movies_query->get();
+
         return response()->json($movies);
     }
 
