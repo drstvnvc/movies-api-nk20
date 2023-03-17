@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateMovieRequest;
+use App\Http\Requests\UpdateMovieRequest;
 use App\Models\Movie;
 use Illuminate\Http\Request;
 
@@ -19,7 +21,7 @@ class MoviesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateMovieRequest $request)
     {
         // $movie = new Movie;
 
@@ -32,7 +34,7 @@ class MoviesController extends Controller
 
         // $movie->save();
 
-        $movie = Movie::create($request->all());
+        $movie = Movie::create($request->validated());
 
         return response()->json($movie);
     }
@@ -49,10 +51,10 @@ class MoviesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateMovieRequest $request, string $id)
     {
         $movie = Movie::findOrFail($id);
-        $movie->update($request->all());
+        $movie->update($request->validated());
         return response()->json($movie);
     }
 
