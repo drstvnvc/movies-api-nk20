@@ -18,23 +18,12 @@ class MoviesController extends Controller
         $director = $request->query('director', '');
         $genre = $request->query('genre', '');
         $per_page = $request->query('per_page', 10);
-
-        $movies = [];
-
-        $movies_query = Movie::query();
-
-        if ($title) {
-            $movies_query->searchByTitle($title);
-        }
-        if ($director) {
-            $movies_query->searchByDirector($director);
-        }
-        if ($genre) {
-            $movies_query->searchByGenre($genre);
-        }
-
-        $movies = $movies_query->paginate($per_page);
+        
         // $movies = $movies_query->get();
+        $movies = Movie::searchByTitle($title)
+            ->searchByDirector($director)
+            ->searchByGenre($genre)
+            ->paginate($per_page);
 
         return response()->json($movies);
     }
