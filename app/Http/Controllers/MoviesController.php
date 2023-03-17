@@ -17,10 +17,11 @@ class MoviesController extends Controller
         $title = $request->query('title', '');
         $director = $request->query('director', '');
         $genre = $request->query('genre', '');
+        $per_page = $request->query('per_page', 10);
 
         $movies = [];
 
-        $movies_query = Movie::query(); // Movie::all();
+        $movies_query = Movie::query();
 
         if ($title) {
             $movies_query->searchByTitle($title);
@@ -32,7 +33,8 @@ class MoviesController extends Controller
             $movies_query->searchByGenre($genre);
         }
 
-        $movies = $movies_query->get();
+        $movies = $movies_query->paginate($per_page);
+        // $movies = $movies_query->get();
 
         return response()->json($movies);
     }
