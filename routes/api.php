@@ -15,3 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/movies', [MoviesController::class, 'index']);
+Route::get('/movies/{id}', [MoviesController::class, 'show']);
+Route::post('/movies', [MoviesController::class, 'store']);
+Route::delete('/movies/{id}', [MoviesController::class, 'destroy']);
+Route::put('/movies/{id}', [MoviesController::class, 'update']);
